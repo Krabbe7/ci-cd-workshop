@@ -1,0 +1,47 @@
+# Navnet på workflowen
+name: Node.js CI
+
+# Workflowet skal køre ved "push" til main branch eller ved pull request til main
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Definerer job i workflowet
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest # Angiver at vi bruger en Ubuntu-maskine til at køre jobben
+
+    # Tjenester, der skal bruges i pipelinen (MongoDB)
+    services:
+      mongo:
+        image: mongo:4.4 # Bruger Docker imaget 'mongo:4.4' til at køre en MongoDB-container
+        ports:
+          - 27017:27017 # Mapper port 27017 på containeren til port 27017 på maskinen
+
+    # Steps definerer de trin, der skal udføres i dette job
+    steps:
+      # 1. Step: Tjekker koden ud fra repository
+      - name: Checkout repository
+        uses: actions/checkout@v3 # Henter koden fra GitHub repository'et
+
+      # 2. Step: Sætter Node.js op på den virtuelle maskine
+      - name: Set up Node.js
+        uses: actions/setup-node@v3 # Bruger GitHub Actions setup-node action
+        with:
+          node-version: "18" # Angiver versionen af Node.js, som vi vil bruge
+
+      # 3. Step: Installering af afhængigheder til både 'api' og 'web' mapperne
+      - name: Install dependencies
+        run: |
+          cd api  
+          npm install  
+          cd ../web 
+          npm install
+
+      # 4. Step: Kører API tests for at sikre at backend fungerer korrekt
+      - name: Run API tests
+        run: |
+          cd api  
+          npm test

@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "node app.js",
+    "start-servers": "concurrently \"npm run dev\" \"cd ../api && node server.js\"",
+    "test": "playwright test"
   },
   "keywords": [],
   "author": "",
@@ -13,5 +15,12 @@
     "ejs": "^3.1.10",
     "express": "^4.19.2",
     "node-fetch": "^2.7.0"
+<<<<<<< Updated upstream
+=======
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "concurrently": "^9.1.2"
+>>>>>>> Stashed changes
   }
 }

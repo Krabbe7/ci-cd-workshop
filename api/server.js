@@ -15,7 +15,7 @@ const Name = mongoose.model("Name", nameSchema)
 
 // POST endpoint to add a new name
 app.post("/api/names", (req, res) => {
-  if (!req.body.name) {
+  if (!req.body.name || req.body.name.trim() === "") {
     return res.status(400).send("Name is required")
   }
   const newName = new Name({ name: req.body.name })

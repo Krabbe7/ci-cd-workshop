@@ -45,3 +45,15 @@ jobs:
         run: |
           cd api  
           npm test
+
+      # 5. Starter frontendog giver lidt tid til at starte /sleep 5)
+      - name: Start frontend app
+        run: |
+          cd web
+          npm run dev &
+          sleep 5
+      # 6. Step: Kører web tests for at sikre at frontend fungerer korrekt
+      - name: Run frontend (Playwright) tests
+        run: |
+          cd web
+          npm test

@@ -15,25 +15,45 @@ const Name = mongoose.model("Name", nameSchema)
 
 // POST endpoint to add a new name
 app.post("/api/names", (req, res) => {
-  if (!req.body.name || req.body.name.trim() === "") {
+  const inputName = req.body.name
+  console.log(`[POST] /api/names - Received name: ${inputName}`)
+
+  if (!inputName || inputName.trim() === "") {
+    console.warn("[POST] /api/names - Missing or empty name in request body")
     return res.status(400).send("Name is required")
   }
-  const newName = new Name({ name: req.body.name })
+
+  const newName = new Name({ name: inputName })
   newName
     .save()
-    .then(() => res.status(201).send("Name added"))
-    .catch((err) => res.status(400).json(err))
+    .then(() => {
+      console.log(`[POST] /api/names - Name '${inputName}' added to DB`)
+      res.status(201).send("Name added")
+    })
+    .catch((err) => {
+      console.error("[POST] /api/names - Error saving name:", err)
+      res.status(400).json(err)
+    })
 })
 
 // GET endpoint to fetch all names
 app.get("/api/names", (req, res) => {
+  console.log("[GET] /api/names - Fetching all names from DB")
+
   Name.find()
-    .then((names) => res.json(names))
-    .catch((err) => res.status(500).json(err))
+    .then((names) => {
+      console.log(`[GET] /api/names - Retrieved ${names.length} names`)
+      res.json(names)
+    })
+    .catch((err) => {
+      console.error("[GET] /api/names - Error retrieving names:", err)
+      res.status(500).json(err)
+    })
 })
 
 // Health check
 app.get("/api/hello", (req, res) => {
+  console.log("[GET] /api/hello - Health check OK")
   res.status(200).send("Hello, World!")
 })
 

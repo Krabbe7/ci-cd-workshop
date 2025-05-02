@@ -29,8 +29,7 @@ test("POST /api/names without name should fail", async () => {
   const res = await request(app).post("/api/names").send({})
 
   // 400 Bad Request → Betyder at klienten (fx brugeren) sendte noget ugyldigt
-  //500 Internal Server Error → Betyder at der skete en fejl på servere
-  expect([400, 500]).toContain(res.statusCode)
+  expect(res.statusCode).toBe(400)
 })
 
 // GET: Bekræfter at det nye navn faktisk blev gemt

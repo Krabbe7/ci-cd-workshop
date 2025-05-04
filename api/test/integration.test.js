@@ -23,7 +23,7 @@ test("POST /api/names should add a new name", async () => {
     .post("/api/names")
     .send({ name: "TestPerson" });
 
-  expect(res.statusCode).toBe(218);
+  expect(res.statusCode).toBe(201);
 });
 
 // POST: Sender ugyldige data og forventer fejl (status 400)

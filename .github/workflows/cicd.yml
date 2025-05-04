@@ -64,13 +64,13 @@ jobs:
           cd web
           npm test
 
-Deploy:
-  needs: build-and-test
-  runs-on: ubuntu-latest
-  if: success()
-  steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
+  Deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: success()
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Deploy app
-      run: echo "Test er sucessfuldt"
+      - name: Deploy app
+        run: echo "Test er sucessfuldt"

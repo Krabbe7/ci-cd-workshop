@@ -16,7 +16,9 @@ jobs:
     # Tjenester, der skal bruges i pipelinen (MongoDB)
     services:
       mongo:
-        image: mongo:4.4 # Bruger Docker imaget 'mongo:4.4' til at køre en MongoDB-container
+        # Bruger Docker imaget 'mongo:4.4' (Docker-imaget for MongoDB version 4.4.)
+        # til at køre en MongoDB-container
+        image: mongo:4.4
         ports:
           - 27017:27017 # Mapper port 27017 på containeren til port 27017 på maskinen
 
